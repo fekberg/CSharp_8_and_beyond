@@ -6,17 +6,18 @@ namespace Pattern_Matching
     {
         static void Main(string[] args)
         {
-            Shape shape = new Triangle();
+            var shape = GetShape();
 
             switch (shape)
             {
-                case Triangle t:
+                case Triangle t when t.A == t.B:
                     Console.WriteLine(
                     $"A: {t.A} " +
                     $"B: {t.B} " +
                     $"C: {t.C}");
                     break;
-
+                case Triangle t:
+                    break;
                 case Rectangle r:
                     Console.WriteLine(
                     $"X: {r.X} " +
@@ -26,6 +27,8 @@ namespace Pattern_Matching
                     break;
             }
         }
+
+        private static Shape GetShape() => new Triangle();
     }
 
     abstract class Shape { }

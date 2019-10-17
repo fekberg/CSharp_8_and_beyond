@@ -1,25 +1,28 @@
 ﻿using System;
-
-[module: System.Runtime.CompilerServices.NonNullTypes]
+using System.Threading.Tasks;
 
 namespace Nullable_references
 {
+
     class Program
     {
-        static void Main(string[] args)
+        async static Task Main(string[] args)
         {
-            var p = new Person();
+            var repository = new PersonRepository();
 
-            Print(p);
-            
-            Print(null!);
+            var person = await repository.Get();
+
+            // Null-coalescing Assignment
+            person = null;
+
+            InsertOrUpdate(person!);
         }
 
-        static void Print(Person p)
+        static void InsertOrUpdate(Person person)
         {
-            Console.WriteLine(p.Name.Length);
-        }
 
+            Console.WriteLine(person.Name.Length);
+        }
     }
 
     class Person
@@ -29,5 +32,10 @@ namespace Nullable_references
         public Person()
         {
         }
+    }
+
+    class PersonRepository
+    {
+        public Task<Person> Get() => Task.FromResult((Person)null);
     }
 }
